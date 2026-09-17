@@ -3,68 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>04 Etiquetas Semánticas</title>
+    <title>Estructuras Avanzadas - Semántica en HTML</title>
 </head>
 <body>
 
-    <center>
+     <center>
         <h1>04 ETIQUETAS SEMÁNTICAS</h1>
         <h3><a href="index.html">REGRESAR</a></h3>
     </center>
+    
+    <h2>¿Qué son las etiquetas semánticas?</h2>
+    <p>Las <strong>etiquetas semánticas</strong> en HTML se encargan de otorgar un <em>significado claro y específico al contenido</em> que contienen. Más allá de definir un estilo visual, ayudan directamente a los navegadores, lectores de pantalla y motores de búsqueda (SEO) a comprender de forma lógica la organización y el propósito de cada bloque dentro del sitio web.</p>
 
-    <!-- Encabezado principal de la página -->
+    <hr>
+
+    <h2>Etiqueta &lt;header&gt;</h2>
+    <p>Se utiliza para estructurar el <strong>encabezado principal de un sitio web o de una sección</strong> determinada. Por lo general, agrupa elementos de identidad como el logotipo corporativo, títulos del sitio, barras de navegación o introducciones esenciales.</p>
+    
+    <p>Ejemplo de uso:</p>
     <header>
-        <h2>Este es el Header (Encabezado)</h2>
-        <p>Aquí suele ir el logotipo de la página o el título principal.</p>
+        <h3>Bienvenido a mi sitio</h3>
+        <p><a href="#">Inicio</a> | <a href="#">Servicios</a> | <a href="#">Contacto</a></p>
     </header>
 
-    <!-- Barra de navegación -->
-    <nav>
-        <h2>Este es el Nav (Navegación)</h2>
-        <p>Aquí se colocan los menús y enlaces principales para moverse por el sitio web.</p>
-    </nav>
+    <hr>
 
-    <!-- Contenido principal de la página -->
-    <main>
-        <h2>Este es el Main (Contenido Principal)</h2>
-        <p>Es el bloque más importante porque contiene el tema central de la página.</p>
+    <h2>Etiqueta &lt;section&gt;</h2>
+    <p>Representa una <strong>sección genérica y temática dentro del documento</strong>. Se emplea para organizar bloques de contenido que guardan relación entre sí, y es una buena práctica que comience siempre con un encabezado jerárquico (h1-h6) que defina su asunto.</p>
+    
+    <p>Ejemplo de uso:</p>
+    <section>
+        <h3>Noticias Recientes</h3>
+        <p>Aquí se muestran las últimas novedades y artículos relacionados.</p>
+    </section>
 
-        <!-- Sección temática dentro del contenido -->
-        <section>
-            <h3>Esta es una Section (Sección)</h3>
-            <p>Se utiliza para agrupar contenido que tiene un mismo tema asignado.</p>
+    <hr>
 
-            <!-- Artículo independiente que se puede leer por sí solo -->
-            <article>
-                <h4>Este es un Article (Artículo)</h4>
-                <p>Contenido autónomo, como una noticia, un post de un blog o un comentario.</p>
-            </article>
-        </section>
+    <h2>Etiqueta &lt;article&gt;</h2>
+    <p>Sirve para empaquetar una <strong>composición de contenido independiente y autónoma</strong> de la página. Está pensada para elementos que podrían distribuirse o reutilizarse de forma aislada, como entradas de blog, posts en foros, widgets de noticias o reseñas de productos.</p>
+    
+    <p>Ejemplo de uso:</p>
+    <article>
+        <h3>Nuevo lanzamiento de producto</h3>
+        <p>Hoy presentamos nuestra nueva línea de dispositivos inteligentes.</p>
+    </article>
 
-        <!-- Barra lateral para búsquedas avanzadas -->
-        <search>
-            <h3>Este es el Search (Búsqueda)</h3>
-            <p>Aquí se coloca el buscador de la página para encontrar contenido rápidamente.</p>
-        </search>
-    </main>
+    <hr>
 
-    <!-- Contenido secundario o barra lateral -->
+    <h2>Etiqueta &lt;aside&gt;</h2>
+    <p>Define una porción de contenido que está <strong>tangencialmente relacionada con lo que le rodea</strong>, actuando como información secundaria o complementaria. Es perfecta para menús laterales, glosarios, publicidad o conjuntos de enlaces externos.</p>
+    
+    <p>Ejemplo de uso:</p>
     <aside>
-        <h2>Este es el Aside (Barra Lateral)</h2>
-        <p>Contenido relacionado de forma indirecta, como publicidad, enlaces rápidos o datos del autor.</p>
+        <h3>Enlaces relacionados</h3>
+        <ul>
+            <li><a href="#">Artículo sobre HTML</a></li>
+            <li><a href="#">Guía de CSS</a></li>
+            <li><a href="#">Buenas prácticas de accesibilidad</a></li>
+        </ul>
     </aside>
 
-    <!-- Pie de página con información de contacto -->
-    <footer>
-        <h2>Este es el Footer (Pie de Página)</h2>
-        <p>Aquí van los derechos de autor, políticas de privacidad y enlaces legales.</p>
+    <hr>
 
-        <!-- Dirección o información de contacto del autor -->
-        <address>
-            <h3>Este es el Address (Contacto)</h3>
-            <p>Creado por el alumno de la carpeta 505. Contacto: correo@ejemplo.com</p>
-        </address>
+    <h2>Etiqueta &lt;footer&gt;</h2>
+    <p>Determina el <strong>cierre o pie de página de un documento o sección</strong>. Comúnmente almacena datos de propiedad intelectual (copyright), avisos legales, accesos rápidos de contacto, enlaces de redes sociales o la fecha de actualización.</p>
+    
+    <p>Ejemplo de uso:</p>
+    <footer>
+        <p>&copy; 2026 Mi Sitio Web</p>
+        <p><a href="#">Contáctanos</a> | <a href="#">Política de Privacidad</a></p>
     </footer>
+
+    <hr>
+
+    <h2>Etiqueta &lt;nav&gt;</h2>
+    <p>Su función es delimitar un <strong>bloque dedicado exclusivamente a la navegación de la web</strong>. Agrupa colecciones de enlaces internos o externos que permiten a los usuarios desplazarse por las distintas pestañas o zonas del documento de forma clara.</p>
+    
+    <p>Ejemplo de uso:</p>
+    <nav>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Servicios</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <hr>
+
+    <h2>Etiqueta &lt;main&gt;</h2>
+    <p>Contiene el <strong>núcleo central y el contenido predominante de la página web</strong>. Debe ser único en el documento, evitando repetir fragmentos compartidos con otras secciones como barras globales de navegación, logos de cabecera o copyrights.</p>
+    
+    <p>Ejemplo de uso:</p>
+    <main>
+        <h3>Contenido Principal</h3>
+        <p>Este es el texto central de la página, donde se muestra la información más relevante.</p>
+    </main>
+
+    <hr>
+
+    <h2>Campo de búsqueda en HTML</h2>
+    <p>El uso del atributo <code>type="search"</code> en una etiqueta de entrada de texto (<code>&lt;input&gt;</code>) se utiliza para proveer un <strong>área optimizada para búsquedas internas</strong>. Permite que los dispositivos móviles y navegadores reconozcan su función nativa, ofreciendo en ocasiones botones para borrar el texto rápidamente.</p>
+    
+    <p>Ejemplo de uso:</p>
+    <form>
+        <label for="buscar">Buscar:</label>
+        <input type="search" id="buscar" placeholder="Escribe tu búsqueda...">
+        <input type="submit" value="Buscar">
+    </form>
+
+    <hr>
+
+    <h2>Etiqueta &lt;address&gt;</h2>
+    <p>Se implementa para proporcionar <strong>información de contacto explícita sobre el autor o dueño</strong> del sitio o del artículo. Admite todo tipo de datos de localización como direcciones postales, cuentas de e-mail, teléfonos directos o hipervínculos de contacto.</p>
+    
+    <p>Ejemplo de uso:</p>
+    <address>
+        <p>Escrito por: Juan Pérez</p>
+        <p>Email: <a href="mailto:juanperez@example.com">juanperez@example.com</a></p>
+        <p>Teléfono: +52 55 1234 5678</p>
+        <p>Dirección: Calle Ejemplo #123, Ciudad</p>
+    </address>
 
 </body>
 </html>
