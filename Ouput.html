@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo Completo de HTML Output</title>
+     <center>
+        <h3><a href="index.html">REGRESAR</a></h3>
+    </center>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .contenedor {
+            max-width: 400px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2, h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .campo {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        /* Estilos específicos para la sección externa del output */
+        .recuadro-total {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-left: 5px solid #2e7d32;
+            border-radius: 4px;
+        }
+        /* Estilo para resaltar la etiqueta output */
+        output {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1b5e20;
+            display: block;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 15px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #1a252f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <h2>Cotizador de Productos</h2>
+
+    <!-- 1. El Formulario con su respectivo ID -->
+    <!-- El evento oninput actualiza el cálculo automáticamente cada vez que escribes -->
+    <form id="formularioCotizador" oninput="totalFactura.value = parseFloat(subtotal.value || 0) + parseFloat(envio.value || 0)">
+        
+        <div class="campo">
+            <label for="subtotal">Subtotal del Producto ($):</label>
+            <input type="number" id="subtotal" name="subtotal" value="100" min="0">
+        </div>
+
+        <div class="campo">
+            <label for="envio">Costo de Envío ($):</label>
+            <input type="number" id="envio" name="envio" value="15" min="0">
+        </div>
+
+        <button type="submit">Confirmar Pedido</button>
+    </form>
+
+    <!-- 2. Sección externa donde vive el OUTPUT -->
+    <!-- Está FUERA de la etiqueta <form>, pero se conecta mediante el atributo 'form' -->
+    <div class="recuadro-total">
+        <h3>Total a Pagar:</h3>
+        
+        <!-- Aquí están TODOS los atributos nativos aplicados -->
+        $ <output 
+            id="totalFactura" 
+            name="totalFactura" 
+            for="subtotal envio" 
+            form="formularioCotizador">
+            115
+        </output>
+        
+    </div>
+</div>
+
+</body>
+</html>

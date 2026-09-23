@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber-Dash: Neon Shape Shifter</title>
+
+         <center>
+        <h3><a href="index.html">REGRESAR</a></h3>
+    </center>
+
+    <style>
+        
+      <div style="position: relative;">
+            <h3 style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); margin: 0; z-index: 100;">
+        <a href="index.html" style="color: #ff007f; text-decoration: none; font-family: Arial, sans-serif;">REGRESAR</a>
+    </h3>
+    </div>
+
+        body {
+            margin: 0;
+            background: #020205;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            border: 3px solid #00f0ff;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+            background: #04040c;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="gameCanvas" width="900" height="500"></canvas>
+
+<script>
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// VELOCIDAD BAJADA: Ahora empieza en 3.5 para un mejor control
+let baseSpeed = 3.5;
+let speed = baseSpeed;
+let score = 0;
+let gameOver = false;
+const gravity = 0.6;
+
+// Sistema de Niveles y Paletas Neón
+let currentLevel = 1;
+const scorePerLevel = 1000; 
+
+const NEON_PALETTES = {
+    1: { name: "CYBERPINK", player: "#00f0ff", platform: "#ff0077", bgGrid: "rgba(0, 240, 255, 0.03)" },
+    2: { name: "ACID LIME", player: "#ffff00", platform: "#00ff66", bgGrid: "rgba(0, 255, 102, 0.03)" },
+    3: { name: "RETRO WAVE", player: "#ff00ff", platform: "#00ffff", bgGrid: "rgba(0, 255, 255, 0.03)" },
+    4: { name: "DEEP VOID", player: "#7700ff", platform: "#ff5500", bgGrid: "rgba(119, 0, 255, 0.03)" },
+    5: { name: "HYPER NEON", player: "#ffffff", platform: "#ff0055", bgGrid: "rgba(255, 0, 85, 0.04)" }
+};
+
+// LISTA DE PERSONAJES DISPONIBLES
+const CHARACTERS = {
+    1: { name: "Estrella", type: "draw_star" },
+    2: { name: "Cuadrado", type: "draw_square" },
+    3: { name: "Caballo", type: "emoji", value: "🐴" },
+    4: { name: "Cactus", type: "emoji", value: "🌵" },
+    5: { name: "Oso", type: "emoji", value: "🐻" }
+};
+let currentSkin = 1; // Empieza con la Estrella
+
+// Entidades del motor
+let player;
+let platforms = [];
+let particles = [];
+
+class Player {
+    constructor() {
+        this.x = 100;
+        this.y = 200;
+        this.width = 40;  // Ajustado un poco más grande para los diseños
+        this.height = 40;
+        this.vy = 0;
+        this.isGrounded = false;
+        this.jumpForce = -12;
+        this.rotation = 0;
+    }
+
+    draw() {
+        const palette = getPalette();
+        const skin = CHARACTERS[currentSkin];
+        ctx.save();
+        
+        // Mover origen al centro del personaje para la rotación
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.rotate(this.rotation);
+        
+        // Efecto Neón Pro para cualquier personaje elegido
+        ctx.shadowBlur = 25;
+        ctx.shadowColor = palette.player;
+
+        if (skin.type === "draw_star") {
+            // DIBUJAR ESTRELLA NEÓN VECTORIAL
+            ctx.fillStyle = palette.player;
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 2;
+            const points = 5;
+            const outerRadius = this.width * 0.6;
+            const innerRadius = this.width * 0.25;
+            let rot = (Math.PI / 2) * 3;
+            const step = Math.PI / points;
+
+            ctx.beginPath();
+            ctx.moveTo(0, -outerRadius);
+            for (let i = 0; i < points; i++) {
+                ctx.lineTo(Math.cos(rot) * outerRadius, Math.sin(rot) * outerRadius);
+                rot += step;
+                ctx.lineTo(Math.cos(rot) * innerRadius, Math.sin(rot) * innerRadius);
+                rot += step;
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+        } else if (skin.type === "draw_square") {
+            // DIBUJAR CUADRADO NEÓN VECTORIAL
+            ctx.fillStyle = palette.player;
+            ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(-this.width / 3, -this.height / 3, (this.width / 3) * 2, (this.height / 3) * 2);
+
+        } else if (skin.type === "emoji") {
+            // RENDERIZAR EMOJIS (Caballo, Cactus, Oso) CON AURA NEÓN
+            ctx.font = `${this.width}px Arial`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(skin.value, 0, 0);
+        }
+
+        ctx.restore();
+    }
+
+    update() {
+        this.vy += gravity;
+        this.y += this.vy;
+
+        if (!this.isGrounded) {
+            this.rotation += 0.08; 
+        } else {
+            this.rotation = 0;
+        }
+
+        if (Math.random() > 0.4 && !gameOver) {
+            particles.push(new Particle(this.x, this.y + this.height - 2, getPalette().player, -speed * 0.3));
+        }
+    }
+
+    jump() {
+        if (this.isGrounded) {
+            this.vy = this.jumpForce;
+            this.isGrounded = false;
+            for(let i = 0; i < 8; i++) {
+                particles.push(new Particle(this.x + this.width / 2, this.y + this.height, "#ffffff", (Math.random() - 0.5) * 4));
+            }
+        }
+    }
+}
+
+class Platform {
+    constructor(x, y, width, height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
+    draw() {
+        const palette = getPalette();
+        ctx.save();
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = palette.platform;
+        ctx.strokeStyle = palette.platform;
+        ctx.lineWidth = 4;
+        
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y + this.height);
+        ctx.lineTo(this.x, this.y);
+        ctx.lineTo(this.x + this.width, this.y);
+        ctx.stroke();
+        
+        ctx.strokeStyle = palette.platform;
+        ctx.globalAlpha = 0.12;
+        ctx.lineWidth = 1;
+        for(let i = 20; i < this.width; i += 20) {
+            ctx.beginPath();
+            ctx.moveTo(this.x + i, this.y);
+            ctx.lineTo(this.x + i, this.y + this.height);
+            ctx.stroke();
+        }
+        ctx.restore();
+    }
+
+    update() {
+        this.x -= speed;
+    }
+}
+
+class Particle {
+    constructor(x, y, color, vx) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.vx = vx;
+        this.vy = (Math.random() - 0.5) * 3;
+        this.radius = Math.random() * 3 + 1;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.02 + 0.01;
+    }
+
+    draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+    }
+}
+
+function getPalette() {
+    let index = currentLevel;
+    if (index > 5) index = 5; 
+    return NEON_PALETTES[index];
+}
+
+function generatePlatforms() {
+    if (platforms.length === 0) {
+        platforms.push(new Platform(0, 350, 500, 200));
+    }
+
+    while (platforms[platforms.length - 1].x < canvas.width + 300) {
+        let lastPlatform = platforms[platforms.length - 1];
+        let gap = Math.random() * 80 + 75 + (speed * 2.5); 
+        let nextX = lastPlatform.x + lastPlatform.width + gap;
+        
+        let heightVariation = (Math.random() - 0.5) * 110;
+        let nextY = Math.max(200, Math.min(420, lastPlatform.y + heightVariation));
+        
+        let nextWidth = Math.random() * 200 + 160;
+        platforms.push(new Platform(nextX, nextY, nextWidth, 300));
+    }
+}
+
+function handleCollisions() {
+    platforms.forEach(platform => {
+        if (player.x < platform.x + platform.width &&
+            player.x + player.width > platform.x &&
+            player.y < platform.y + platform.height &&
+            player.y + player.height > platform.y) {
+            
+            if (player.vy > 0 && (player.y + player.height - player.vy) <= platform.y + 6) {
+                player.y = platform.y - player.height;
+                player.vy = 0;
+                player.isGrounded = true;
+            }
+        }
+    });
+}
+
+function checkLevelUp() {
+    let targetLevel = Math.floor(score / scorePerLevel) + 1;
+    if (targetLevel > currentLevel) {
+        currentLevel = targetLevel;
+        // VELOCIDAD DE NIVEL SUAVE: Aumenta de 0.8 en 0.8 para no volverse imposible
+        speed = baseSpeed + (currentLevel - 1) * 0.8;
+        
+        const newColor = getPalette().platform;
+        for (let i = 0; i < 40; i++) {
+            particles.push(new Particle(canvas.width / 2, canvas.height / 2, newColor, (Math.random() - 0.5) * 12));
+        }
+    }
+}
+
+function init() {
+    player = new Player();
+    platforms = [];
+    particles = [];
+    currentLevel = 1;
+    speed = baseSpeed;
+    score = 0;
+    gameOver = false;
+    generatePlatforms();
+}
+
+function triggerJump() {
+    if (gameOver) init();
+    else player.jump();
+}
+
+// CAPTURA DE TECLADO: Detecta saltos y cambio de personajes
+window.addEventListener("keydown", (e) => {
+    if (e.code === "Space" || e.code === "ArrowUp") {
+        e.preventDefault();
+        triggerJump();
+    }
+    // Teclas del 1 al 5 cambian el aspecto del personaje al instante
+    if (["Digit1", "Digit2", "Digit3", "Digit4", "Digit5"].includes(e.code)) {
+        currentSkin = parseInt(e.code.replace("Digit", ""));
+    }
+});
+canvas.addEventListener("mousedown", triggerJump);
+
+function loop() {
+    requestAnimationFrame(loop);
+
+    const palette = getPalette();
+    
+    canvas.style.borderColor = palette.platform;
+    canvas.style.boxShadow = `0 0 30px ${palette.platform}, inset 0 0 15px ${palette.platform}`;
+
+    ctx.fillStyle = "#030308";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Rejilla de Fondo
+    ctx.strokeStyle = palette.bgGrid;
+    ctx.lineWidth = 1;
+    for(let i = 0; i < canvas.width; i += 40) {
+        ctx.beginPath(); 
+        ctx.moveTo(i, 0); 
+        ctx.lineTo(i, canvas.height); 
+        ctx.stroke();
+    }
+
+    if (!gameOver) {
+        score += 1;
+        checkLevelUp();
+
+        player.update();
+        handleCollisions();
+        generatePlatforms();
+
+        platforms.forEach((p, index) => {
+            p.update();
+            p.draw();
+            if (p.x + p.width < 0) {
+                platforms.splice(index, 1);
+            }
+        });
+
+        player.draw();
+
+        if (player.y > canvas.height) {
+            gameOver = true;
+            for(let i = 0; i < 30; i++) {
+                particles.push(new Particle(player.x + 20, canvas.height - 10, palette.player, (Math.random() - 0.5) * 10));
+            }
+        }
+    } else {
+        ctx.fillStyle = "rgba(4, 4, 12, 0.85)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.shadowBlur = 25;
+        const newColor = getPalette().platform;
+        for (let i = 0; i < 40; i++) {
+            particles.push(new Particle(canvas.width / 2, canvas.height / 2, newColor, (Math.random() - 0.5) * 12));
+        }
+    }
+}
+
+function init() {
+    player = new Player();
+    platforms = [];
+    particles = [];
+    currentLevel = 1;
+    speed = baseSpeed;
+    score = 0;
+    gameOver = false;
+    generatePlatforms();
+}
+
+function triggerJump() {
+    if (gameOver) init();
+    else player.jump();
+}
+
+// CAPTURA DE TECLADO: Detecta saltos y cambio de personajes
+window.addEventListener("keydown", (e) => {
+    if (e.code === "Space" || e.code === "ArrowUp") {
+        e.preventDefault();
+        triggerJump();
+    }
+    // Teclas del 1 al 5 cambian el aspecto del personaje al instante
+    if (["Digit1", "Digit2", "Digit3", "Digit4", "Digit5"].includes(e.code)) {
+        currentSkin = parseInt(e.code.replace("Digit", ""));
+    }
+});
+canvas.addEventListener("mousedown", triggerJump);
+
+function loop() {
+    requestAnimationFrame(loop);
+
+    const palette = getPalette();
+    
+    canvas.style.borderColor = palette.platform;
+    canvas.style.boxShadow = `0 0 30px ${palette.platform}, inset 0 0 15px ${palette.platform}`;
+
+    ctx.fillStyle = "#030308";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Rejilla de Fondo
+    ctx.strokeStyle = palette.bgGrid;
+    ctx.lineWidth = 1;
+    for(let i = 0; i < canvas.width; i += 40) {
+        ctx.beginPath(); 
+        ctx.moveTo(i, 0); 
+        ctx.lineTo(i, canvas.height); 
+        ctx.stroke();
+    }
+
+    if (!gameOver) {
+        score += 1;
+        checkLevelUp();
+
+        player.update();
+        handleCollisions();
+        generatePlatforms();
+
+        platforms.forEach((p, index) => {
+            p.update();
+            p.draw();
+            if (p.x + p.width < 0) {
+                platforms.splice(index, 1);
+            }
+        });
+
+        player.draw();
+
+        if (player.y > canvas.height) {
+            gameOver = true;
+            for(let i = 0; i < 30; i++) {
+                particles.push(new Particle(player.x + 20, canvas.height - 10, palette.player, (Math.random() - 0.5) * 10));
+            }
+        }
+    } else {
+        ctx.fillStyle = "rgba(4, 4, 12, 0.85)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.shadowBlur = 25;
+        ctx.shadowColor = palette.platform;
+        ctx.fillStyle = palette.platform;
+        ctx.font = "bold 45px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("SYSTEM CRASHED", canvas.width / 2, canvas.height / 2 - 20);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "20px sans-serif";
+        ctx.fillText(`Distancia: ${score}m  |  Nivel Máximo: ${currentLevel}`, canvas.width / 2, canvas.height / 2 + 25);
+        ctx.fillText("Presiona ESPACIO o haz CLIC para reiniciar", canvas.width / 2, canvas.height / 2 + 75);
+    }
+
+    particles.forEach((p, index) => {
+        p.update();
+        p.draw();
+        if (p.alpha <= 0) {
+            particles.splice(index, 1);
+        }
+    });
+
+    if (!gameOver) {
+        ctx.save();
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = palette.player;
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 18px monospace";
+        ctx.textAlign = "left";
+        ctx.fillText(`DISTANCIA: ${score}m`, 30, 40);
+        ctx.fillText(`SKIN ACTIVA: ${CHARACTERS[currentSkin].name.toUpperCase()}`, 30, 70);
+        
+        ctx.fillStyle = palette.platform;
+        ctx.fillText(`LEVEL ${currentLevel}: ${palette.name}`, 30, 100);
+        
+        // Menú de ayuda en pantalla
+        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        ctx.font = "14px monospace";
+        ctx.textAlign = "right";
+        ctx.fillText("Cambiar skin: Presiona 1, 2, 3, 4 o 5", canvas.width - 30, 40);
+        ctx.restore();
+    }
+}
+
+// Inicialización e inicio automático del Loop
+init();
+loop();
+</script>
+    
+</body>
+</html>

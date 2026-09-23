@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios HTML</title>
+</head>
+<body>
+    <center>
+        <h1>Formularios HTML</h1>
+        <h3><a href="index.html">REGRESAR</a></h3>
+        <table width="100%" border align="center">
+            <thead>
+                <tr align="center">
+                    <td><h3>NP</h3></td>
+                    <td><h3>Nombre</h3></td>
+                    <td><h3>Ejemplo</h3></td>
+                    <td><h3>Descripción</h3></td>
+                    <td><h3>Alumno</h3></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><h3>1</h3></td>
+                    <td>optgroup</td>
+                    <td>
+                        <label for="">Carrera</label>
+                        <select name="carrera" id="">
+                            <optgroup label="Ingenierías">
+                                <option value="sistemas">Sistemas</option>
+                                <option value="industrial">Industrial</option>
+                            </optgroup>
+                            <optgroup label="Economico-Administrativas">
+                                <option value="">Contabilidad</option>
+                                <option value="">Administracion</option>
+                            </optgroup>
+                            <optgroup label="TECNOLOGICAS">
+                                <option value="">Contabilidad</option>
+                                <option value="">Administracion</option>
+                            </optgroup>
+                        </select>
+                    </td>
+                    <td>
+                        Etiqueta que sirve para agrupar opciones dentro de una lista desplegable
+                    </td>
+                    <td>ESTEBAN</td>
+                </tr>
+
+                <tr>
+                    <td><h3>2</h3></td>
+                    <td>meter</td>
+                    <td>
+                        <meter | min="0" max="10" low="5" high="8" value="6.0" optimum="10" titles="6.0 de 10"></meter>
+                    </td>
+                    <td>
+                        Muestra graficamente un valor predeterminado
+                    </td>
+                    <td>ANGEL</td>
+                </tr>
+                <tr>
+                    <td><h3>3</h3></td>
+                    <td>label o Etiqueta</td>
+                <td>
+                    <label>Nombre: <input type="text"></label>
+                </td>
+                <td>Sirve para colocar texto estático dentro de un formulación como Descripción y también muestra resultados</td>
+                <td>JESUS</td>
+                </tr>
+
+                <tr>
+                    <td><h3>4</h3></td>
+                     <td>checkbox</td>
+                <td>
+                    <input type="checkbox" checked> <input type="checkbox" checked>
+                </td>
+                <td>Casilla de verificación</td>
+                <td>ALEXIS</td>
+                </tr>
+
+                 <tr>
+                <td>5</td>
+                <td>file</td>
+                <td>
+                    <input type="file">
+                </td>
+                <td>Sirve para cargar archivos</td>
+                <td>MICHELLE</td>
+            </tr>
+
+            <tr>
+                <td>6</td>
+                <td>boton reset</td>
+                <td>
+                    <input type="reset" value="Borrar">
+                </td>
+                <td>Boton para borrar el formulario</td>
+                <td>XIMENA</td>
+            </tr>
+
+            <tr>
+                <td>7</td>
+                <td>legend</td>
+                <td>
+                    <fieldset>
+                        <legend>TITULO DEL GRUPO</legend>
+                        <label>Nombre: <input type="text"></label><br><br>
+                        <label>Nombre: <input type="text"></label>
+                    </fieldset>
+                </td>
+                <td>Muestra el titulo de un seccion</td>
+                <td>ZOE</td>
+            </tr>
+
+            <tr>
+                <td>8</td>
+                <td>range</td>
+                <td>
+                    <input type="range" min="0" max="100" value="50">
+                </td>
+                <td>Sirve para seleccionar un valor dentro de un rango</td>
+                <td>ABRAHAM</td>
+            </tr>
+
+            <tr>
+                <td>9</td>
+                <td>password</td>
+                <td>
+                    <input type="password" placeholder="Contraseña">
+                </td>
+                <td>Sirve para ingresar contraseñas</td>
+                <td>HECTOR</td>
+            </tr>
+
+            <tr>
+                <td>10</td>
+                <td>datalist</td>
+                <td>
+                    <input type="text" list="browsers">
+                    <datalist id="browsers">
+                        <option value="Chrome">
+                        <option value="Firefox">
+                        <option value="Safari">
+                        <option value="Edge">
+                    </datalist>
+                </td>
+                <td>Sirve para proporcionar una lista desplegable de opciones</td>
+                <td>REGINA</td>
+            </tr>
+
+            <tr>
+                <td>11</td>
+                <td>formulario</td>
+                <td>
+                    <form>
+                        <label>Nombre: <input type="text"></label><br><br>
+                        <label>Correo: <input type="email"></label><br><br>
+                        <input type="submit" value="Enviar">
+                    </form>
+                </td>
+                <td>Sirve para crear un formulario</td>
+                <td>CHARBEL</td>
+            </tr>
+
+            <tr>
+                <td>12</td>
+                <td>date</td>
+                <td>
+                    <input type="date">
+                </td>
+                <td>Sirve para seleccionar una fecha</td>
+                <td>YATZIL</td>
+            </tr>
+
+            <tr>
+                <td>13</td>
+                <td>fieldset</td>
+                <td>
+                    <fieldset>
+                        <legend>TITULO DEL GRUPO</legend>
+                        <label>Nombre: <input type="text"></label><br><br>
+                        <label>Nombre: <input type="text"></label>
+                    </fieldset>
+                </td>
+                <td>Sirve para agrupar elementos en el formulario</td>
+                <td>GABRIEL</td>
+            </tr>
+
+            <tr>
+                <td>14</td>
+                <td>textarea</td>
+                <td>
+                    <textarea rows="4" cols="50" placeholder="Escribe tu mensaje aquí..."></textarea>
+                </td>
+                <td>Sirve para ingresar texto multilinea</td>
+                <td>NATALIA</td>
+            </tr>
+                <td>15</td>
+                <td>select combo</td>
+                <td>
+                    <select>
+                        <option value="opcion1">Uno</option>
+                        <option value="opcion2">Uno</option>
+                        <option value="opcion3">Uno</option>
+                        <option value="opcion4">Uno</option>
+                        <option value="opcion5">Uno</option>
+                        <option value="opcion6">Uno</option>
+                    </select>
+                </td>
+                <td>Sirve para crear una lista desplegable de opciones</td>
+                <td>MAYTE</td>
+            </tr>
+
+            <tr>
+                <td>16</td>
+                <td>color</td>
+                <td>
+                    <input type="color">
+                </td>
+                <td>Sirve para seleccionar un color</td>
+                <td>BRAYAN</td>
+            </tr>
+
+            <tr>
+                <td>17</td>
+                <td>url</td>
+                <td>
+                    <input type="url" placeholder="https://www.ejemplo.com">
+                </td>
+                <td>Sirve para ingresar una URL</td>
+                <td>SANTIAGO</td>
+            </tr>
+
+            <tr>
+                <td>18</td>
+                <td>select</td>
+                <td>
+                    <select>
+                        <option>Opción 1</option>
+                        <option>Opción 2</option>
+                        <option>Opción 3</option>
+                    </select>
+                </td>
+                <td>Lista desplegable o combo box</td>
+                <td>ZURIEL</td>
+            </tr>
+
+             <tr>
+                <td>19</td>
+                <td>hidden</td>
+                <td>
+                    <input type="hidden" name="id_usuario" value="12345">
+                </td>
+                <td>Campo oculto</td>
+                <td>JESUS</td>
+            </tr>
+
+             <tr>
+                <td>20</td>
+                <td>radio button</td>
+                <td>
+                    <input type="radio" name="grupo1"> <input type="radio" name="grupo1" checked>
+                </td>
+                <td>Botón de selección radio</td>
+                <td>IAN</td>
+            </tr>
+
+            <tr>
+                <td>21</td>
+                <td>submit</td>
+                <td>
+                    <input type="submit" value="Enviar">
+                </td>
+                <td>Botón enviar</td>
+                <td>CARLOS</td>
+            </tr>
+
+            <tr>
+                <td>22</td>
+                <td>email</td>
+                <td>
+                    <input type="email" placeholder="correo@ejemplo.com">
+                </td>
+                <td>Campo de correo electrónico</td>
+                <td>SEBASTIAN</td>
+            </tr>
+
+            <tr>
+                <td>23</td>
+                <td>month</td>
+                <td>
+                    <input type="month" value="2026-01">
+                </td>
+                <td>Campo para seleccionar mes</td>
+                <td>EMILIO</td>
+            </tr>
+
+            <tr>
+                <td>24</td>
+                <td>time</td>
+                <td>
+                    <input type="time" value="21:05">
+                </td>
+                <td>Campo para seleccionar hora</td>
+                <td>ALEXIS</td>
+            </tr>
+
+             <tr>
+                <td>25</td>
+                <td>text</td>
+                <td>
+                    <input type="text">
+                </td>
+                <td>Campo de texto</td>
+                <td>JULIETA</td>
+            </tr>
+
+            <tr>
+                <td>26</td>
+                <td>tel</td>
+                <td>
+                    <input type="tel" value="5254243">
+                </td>
+                <td>Campo teléfono</td>
+                <td>ALEXANDER</td>
+            </tr>
+
+             <tr>
+                <td>27</td>
+                <td>progress</td>
+                <td>
+                    <progress value="30" max="100"></progress>
+                </td>
+                <td>Barra de progreso</td>
+                <td>DILAN</td>
+            </tr>
+
+            <tr>
+                <td>28</td>
+                <td>boton</td>
+                <td>
+                    <button type="button">Ejemplo Botón</button>
+                    <button type="button">Ejemplo 2</button>
+                </td>
+                <td>Campo botón comando</td>
+                <td>NEFERTITI</td>
+            </tr>
+
+             <tr>
+                <td>29</td>
+                <td>output</td>
+                <td>
+                    <output>15</output>
+                </td>
+                <td>Salida de información</td>
+                <td>ABRIL</td>
+            </tr>
+
+             <tr>
+                <td>30</td>
+                <td>week</td>
+                <td>
+                    <input type="week">
+                </td>
+                <td>Campo semana del año</td>
+                <td>DIEGO</td>
+            </tr>
+
+            <tr>
+                <td>31</td>
+                <td>buscador</td>
+                <td>
+                    <input type="text" id="search" placeholder="Buscar...">
+                    <button onclick="buscar()">Buscar</button>
+                    
+                    <script>
+                    function buscar() {
+                        let query = document.getElementById("search").value;
+                        alert("Buscando: " + query);
+                    }
+                    </script>
+                </td>
+                <td>Barra para realizar búsquedas mediante código de script</td>
+                <td>PEDRO</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </center>
+</body>
+</html>

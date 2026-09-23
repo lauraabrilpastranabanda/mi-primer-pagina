@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MULTIMEDIA</title>
+</head>
+<body>
+    <center>
+        <h1>MULTIMEDIA HTML</h1>
+        <h3><a href="index.html">REGRESAR</a></h3>
+        <h3>VIDEO</h3>
+        <video width="640" height="360" controls autoplay muted loop poster="img/tim1.jpg">
+            <source src="video/videoplayback.mp4" type="video/mp4">
+            tu navegador no soporta el elemento de video.
+        </video>
+
+        <h3>AUDIO</h3>
+        <audio controls autoplay loop>
+            <source src="video/archivos/WhatsApp_Audio.mp3" type="audio/mpeg">
+            tu navegador no soporta la etiqueta de audio.
+        </audio>
+
+       <h3>VIDEO CON SUBTITULOS</h3>
+
+        <video width="640" height="360" controls loop poster="img/tim1.jpg">
+        <source src="video/videoplayback (2).mp4" type="video/mp4">
+        <track src="video/videoplayback (2).vtt" kind="subtitles" srclang="es" label="Español" default>
+    tu navegador no soporta el elemento de video.
+    </video>
+
+    <h3>IMAGEN CON RUTA RELATIVA</h3>
+    <img src="img/tim2.jpg" alt="TIM BERNAERS LEE" width="400" height="300" loading="lazy" border="10px"><br>
+
+    <h3>IMAGEN CON RUTA ABSOLUTA</h3>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQElU-kM3IUHnCot1tfZVxsXefRzWbXi7o0BfD9BSUZsFl7UKa1B4XFCdIi&s=10" alt="CECYTO" width="400" height="300" loading="lazy" border="10px"><br>
+
+    <figure>
+        <img src="img/tim1.jpg" alt="Sematica HTML"  width="250" height="150s" loading="lazy" border="40px"><br>>
+        <figcaption>1. Tim Berners-Lee, Estructura semántica HTML</figcaption>
+    </figure>
+    <h3>EMBED</h3>
+
+    <h3>CANVAS</h3>
+    <canvas id="miCanvas" width="300" height="200"></canvas>>
+        <script>
+        const ctx = document.getElementById('miCanvas').getContext('2d');
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(20, 20, 150, 100);
+        </script>
+    <h3>SVG</h3>
+        <svg width="100" height="100">
+            <circle cx="50" cy="50" r="40" fill="green" />
+        </svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+            <!-- Orejas -->
+            <circle cx="55" cy="55" r="25" fill="#8B5A2B" />
+            <circle cx="145" cy="55" r="25" fill="#8B5A2B" />
+            <circle cx="55" cy="55" r="12" fill="#D2A679" />
+            <circle cx="145" cy="55" r="12" fill="#D2A679" />
+            <!-- Cabeza -->
+            <circle cx="100" cy="110" r="70" fill="#A0522D" />
+            <!-- Hocico -->
+            <ellipse cx="100" cy="135" rx="35" ry="28" fill="#D2A679" />
+            <!-- Ojos -->
+            <circle cx="80" cy="95" r="10" fill="#000" />
+            <circle cx="120" cy="95" r="10" fill="#000" />
+            <!-- Nariz -->
+            <ellipse cx="100" cy="120" rx="12" ry="7" fill="#000" />
+            
+        </svg>
+    </center>
+</body>
+</html>
